@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Heart, ShoppingBag, ChevronDown, } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import "./Section3.css";
 
 const Section3 = ({
