@@ -1,0 +1,159 @@
+.checkout-section-one {
+    position: relative;
+    width: 100%;
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #e9e3d8;
+}
+
+.checkout-section-one-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(248, 246, 241, 0.98) 0%,
+            rgba(248, 246, 241, 0.91) 42%,
+            rgba(248, 246, 241, 0.45) 75%,
+            rgba(248, 246, 241, 0.2) 100%
+        );
+}
+
+.checkout-section-one-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 65px 25px;
+}
+
+.checkout-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 55px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: #999;
+}
+
+.checkout-breadcrumb span {
+    color: #a28a5c;
+}
+
+.checkout-breadcrumb strong {
+    color: #333;
+    font-weight: 700;
+}
+
+.checkout-hero-content {
+    max-width: 620px;
+}
+
+.checkout-hero-content h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 6vw, 72px);
+    line-height: 0.98;
+    font-weight: 400;
+    letter-spacing: -2px;
+    color: #282828;
+}
+
+.checkout-hero-content h1 em {
+    color: #a28a5c;
+    font-style: italic;
+}
+
+.checkout-hero-content p {
+    max-width: 440px;
+    margin: 25px 0 28px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #6f6b65;
+}
+
+.checkout-secure-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 15px;
+    border: 1px solid #d8d0c3;
+    background: rgba(255, 255, 255, 0.45);
+    color: #6f675b;
+}
+
+.checkout-secure-badge svg {
+    color: #a28a5c;
+}
+
+.checkout-secure-badge span {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+@media (max-width: 700px) {
+    .checkout-section-one {
+        min-height: 350px;
+    }
+
+    .checkout-section-one-container {
+        padding: 50px 20px;
+    }
+
+    .checkout-breadcrumb {
+        margin-bottom: 45px;
+    }
+
+    .checkout-hero-content h1 {
+        font-size: 50px;
+        letter-spacing: -1.5px;
+    }
+
+    .checkout-hero-content p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-section-one {
+        min-height: 330px;
+    }
+
+    .checkout-section-one-container {
+        padding: 40px 18px;
+    }
+
+    .checkout-breadcrumb {
+        margin-bottom: 40px;
+        gap: 5px;
+        font-size: 8px;
+    }
+
+    .checkout-section-one-label {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .checkout-hero-content h1 {
+        font-size: 43px;
+    }
+
+    .checkout-hero-content p {
+        max-width: 330px;
+        font-size: 11px;
+    }
+
+    .checkout-secure-badge {
+        padding: 10px 12px;
+    }
+
+    .checkout-secure-badge span {
+        font-size: 8px;
+    }
+}

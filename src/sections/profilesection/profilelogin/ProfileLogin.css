@@ -1,0 +1,308 @@
+.profile-login-section {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    padding: 70px 40px;
+    background: #f8f6f1;
+}
+
+.profile-login-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 500px;
+    gap: 90px;
+    align-items: center;
+}
+
+.profile-login-intro {
+    max-width: 560px;
+}
+
+.profile-login-intro h1 {
+    margin: 0;
+    color: #292620;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -2.5px;
+}
+
+.profile-login-intro h1 em {
+    color: #a08767;
+    font-style: italic;
+}
+
+.profile-login-intro p {
+    max-width: 440px;
+    margin: 30px 0 0;
+    color: #777066;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.profile-login-card {
+    padding: 46px 44px;
+    border: 1px solid #e8e1d6;
+    background: #fffdf9;
+    box-shadow: 0 20px 60px rgba(69, 57, 40, 0.08);
+}
+
+.profile-login-card-header {
+    margin-bottom: 30px;
+}
+
+.profile-login-card-header > span {
+    display: block;
+    margin-bottom: 10px;
+    color: #a08767;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.profile-login-card-header h2 {
+    margin: 0;
+    color: #292620;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    font-weight: 400;
+}
+
+.profile-login-card-header p {
+    margin: 9px 0 0;
+    color: #8a8277;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.profile-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.profile-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.profile-input-group label {
+    color: #70685d;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.profile-input-wrapper {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 15px;
+    border: 1px solid #ded7cc;
+    background: #ffffff;
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.profile-input-wrapper:focus-within {
+    border-color: #a08767;
+    box-shadow: 0 0 0 3px rgba(160, 135, 103, 0.08);
+}
+
+.profile-input-wrapper svg {
+    flex-shrink: 0;
+    color: #a08767;
+}
+
+.profile-input-wrapper input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #302d28;
+    font-size: 13px;
+}
+
+.profile-input-wrapper input::placeholder {
+    color: #aaa299;
+}
+
+.profile-password-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #928a80;
+    cursor: pointer;
+}
+
+.profile-password-toggle:hover {
+    color: #a08767;
+}
+
+.profile-login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: -3px;
+}
+
+.profile-remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #81796e;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.profile-remember input {
+    accent-color: #a08767;
+    cursor: pointer;
+}
+
+.profile-forgot-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #a08767;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.profile-forgot-button:hover {
+    text-decoration: underline;
+}
+
+.profile-submit-button {
+    height: 52px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #a08767;
+    background: #a08767;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.profile-submit-button:hover {
+    border-color: #8f7658;
+    background: #8f7658;
+}
+
+.profile-submit-button svg {
+    transition: transform 0.25s ease;
+}
+
+.profile-submit-button:hover svg {
+    transform: translateX(4px);
+}
+
+.profile-login-switch {
+    margin-top: 25px;
+    padding-top: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    border-top: 1px solid #ebe5dc;
+    color: #8a8277;
+    font-size: 11px;
+}
+
+.profile-login-switch button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #a08767;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-login-switch button:hover {
+    text-decoration: underline;
+}
+
+.profile-login-security {
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #aaa197;
+    font-size: 10px;
+}
+
+.profile-login-security svg {
+    color: #a08767;
+}
+
+@media (max-width: 950px) {
+    .profile-login-container {
+        max-width: 600px;
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .profile-login-intro {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .profile-login-intro p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile-login-intro-line {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .profile-login-section {
+        min-height: calc(100vh - 76px);
+        padding: 45px 18px;
+    }
+
+    .profile-login-intro h1 {
+        font-size: 48px;
+        letter-spacing: -1.8px;
+    }
+
+    .profile-login-intro p {
+        font-size: 13px;
+    }
+
+    .profile-login-card {
+        padding: 32px 22px;
+    }
+
+    .profile-login-card-header h2 {
+        font-size: 29px;
+    }
+
+    .profile-login-options {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

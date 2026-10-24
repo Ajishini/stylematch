@@ -1,0 +1,103 @@
+.wishlist-section-one {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.wishlist-section-one-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 20px;
+}
+
+.wishlist-section-one-content h1 {
+    margin: 0;
+    color: #ffffff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.wishlist-section-one-content h1 em {
+    color: #d2b47c;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.wishlist-section-one-content p {
+    margin: 22px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.8;
+    letter-spacing: 0.2px;
+}
+
+@media (max-width: 800px) {
+    .wishlist-section-one {
+        min-height: 330px;
+    }
+
+    .wishlist-section-one-content {
+        padding: 55px 20px;
+    }
+
+    .wishlist-section-one-content h1 {
+        font-size: 58px;
+    }
+}
+
+@media (max-width: 600px) {
+    .wishlist-section-one {
+        min-height: 290px;
+    }
+
+    .wishlist-section-one-content {
+        padding: 45px 20px;
+    }
+
+    .wishlist-section-one-content > span {
+        margin-bottom: 15px;
+        font-size: 8px;
+        letter-spacing: 2.5px;
+    }
+
+    .wishlist-section-one-content h1 {
+        font-size: 45px;
+        letter-spacing: -1px;
+    }
+
+    .wishlist-section-one-content p {
+        margin-top: 18px;
+        font-size: 11px;
+        line-height: 1.7;
+    }
+}
+
+@media (max-width: 400px) {
+    .wishlist-section-one {
+        min-height: 270px;
+    }
+
+    .wishlist-section-one-content {
+        padding: 40px 15px;
+    }
+
+    .wishlist-section-one-content h1 {
+        font-size: 39px;
+    }
+
+    .wishlist-section-one-content p {
+        font-size: 10px;
+    }
+}

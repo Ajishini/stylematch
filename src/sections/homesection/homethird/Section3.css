@@ -1,0 +1,338 @@
+.home-trending {
+    width: 100%;
+    padding: 90px 6%;
+    background: #ffffff;
+    color: #171717;
+}
+
+.home-trending-heading {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 42px;
+}
+
+.home-trending-heading h2 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -1.5px;
+    color: #171717;
+}
+
+.home-trending-heading h2 em {
+    font-style: italic;
+    color: #a78348;
+}
+
+.home-trending-heading p {
+    margin: 12px 0 0;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #777777;
+}
+
+.home-trending-heading > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 8px;
+    color: #211e1a;
+    text-decoration: none;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-family: Georgia, "Times New Roman", serif;
+    transition:
+        gap 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.home-trending-heading > a:hover {
+    gap: 14px;
+    color: #a78348;
+    border-color: #a78348;
+}
+
+.home-product-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.home-product-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.home-product-image {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 0.78;
+    overflow: hidden;
+    background: #f4f1ec;
+    text-decoration: none;
+}
+
+.home-product-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.home-product-image:hover img {
+    transform: scale(1.06);
+}
+
+.home-product-discount {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 3;
+    padding: 7px 10px;
+    background: #171717;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+}
+
+.home-product-wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    color: #171717;
+    cursor: pointer;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.home-product-wishlist:hover {
+    background: #171717;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.home-product-quick {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 4;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #171717;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(15px);
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+.home-product-image:hover .home-product-quick {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-product-info {
+    display: block;
+    padding: 16px 2px 0;
+    text-decoration: none;
+    color: #171717;
+}
+
+.home-product-info > span {
+    display: block;
+    margin-bottom: 7px;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.7px;
+    color: #999999;
+}
+
+.home-product-info h3 {
+    margin: 0 0 9px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 500;
+    color: #222222;
+    transition: color 0.25s ease;
+}
+
+.home-product-info:hover h3 {
+    color: #a78348;
+}
+
+.home-product-price {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.home-product-price strong {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #171717;
+}
+
+.home-product-price del {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    color: #999999;
+}
+
+@media (max-width: 1100px) {
+    .home-trending {
+        padding: 80px 5%;
+    }
+
+    .home-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 18px;
+    }
+
+    .home-trending-heading h2 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 650px) {
+    .home-trending {
+        padding: 65px 5%;
+    }
+
+    .home-trending-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+        margin-bottom: 32px;
+    }
+
+    .home-trending-heading h2 {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .home-trending-heading p {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .home-product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px 12px;
+    }
+
+    .home-product-image {
+        aspect-ratio: 0.76;
+    }
+
+    .home-product-discount {
+        top: 9px;
+        left: 9px;
+        padding: 6px 8px;
+        font-size: 8px;
+    }
+
+    .home-product-wishlist {
+        top: 8px;
+        right: 8px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .home-product-wishlist svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .home-product-info {
+        padding-top: 13px;
+    }
+
+    .home-product-info > span {
+        font-size: 8px;
+        letter-spacing: 1.4px;
+        margin-bottom: 6px;
+    }
+
+    .home-product-info h3 {
+        font-size: 12px;
+        margin-bottom: 7px;
+    }
+
+    .home-product-price {
+        gap: 7px;
+    }
+
+    .home-product-price strong {
+        font-size: 12px;
+    }
+
+    .home-product-price del {
+        font-size: 10px;
+    }
+
+    .home-product-quick {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .home-trending {
+        padding: 55px 4%;
+    }
+
+    .home-trending-heading h2 {
+        font-size: 32px;
+    }
+
+    .home-product-grid {
+        gap: 24px 9px;
+    }
+
+    .home-product-info h3 {
+        font-size: 11px;
+    }
+
+    .home-product-price strong {
+        font-size: 11px;
+    }
+}

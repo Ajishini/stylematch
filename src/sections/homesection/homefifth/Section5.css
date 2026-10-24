@@ -1,0 +1,208 @@
+.style-discovery-section {
+    position: relative;
+    width: 100%;
+    background: #f3eee5;
+    padding: 115px 6%;
+    overflow: hidden;
+}
+
+.style-discovery-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 1;
+}
+
+.style-discovery-container h2 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 72px;
+    line-height: 0.98;
+    font-weight: 400;
+    letter-spacing: -2px;
+    color: #202020;
+}
+
+.style-discovery-container h2 em {
+    color: #b28b52;
+    font-style: italic;
+}
+
+.style-discovery-description {
+    max-width: 530px;
+    margin: 28px auto 45px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #706b63;
+}
+
+.style-discovery-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 950px;
+    margin: 0 auto;
+    border-top: 1px solid #d8d0c3;
+    border-left: 1px solid #d8d0c3;
+}
+
+.style-discovery-option {
+    position: relative;
+    min-height: 150px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.35);
+    border-right: 1px solid #d8d0c3;
+    border-bottom: 1px solid #d8d0c3;
+    color: #202020;
+    transition: all 0.35s ease;
+}
+
+.style-discovery-option:hover {
+    background: #ffffff;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(60, 50, 35, 0.08);
+}
+
+.style-discovery-option > span {
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #a39d93;
+}
+
+.style-discovery-option h3 {
+    margin: 20px 0 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.style-discovery-option svg {
+    position: absolute;
+    right: 25px;
+    bottom: 27px;
+    color: #b28b52;
+    transition: transform 0.3s ease;
+}
+
+.style-discovery-option:hover svg {
+    transform: translateX(5px);
+}
+
+.style-discovery-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    padding: 15px 25px;
+    background: #202020;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    transition: all 0.3s ease;
+}
+
+.style-discovery-button:hover {
+    background: #b28b52;
+    transform: translateY(-2px);
+}
+
+.style-discovery-background {
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    transform: translateX(-50%);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 240px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -10px;
+    color: rgba(178, 139, 82, 0.055);
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+}
+
+@media (max-width: 900px) {
+    .style-discovery-section {
+        padding: 90px 5%;
+    }
+
+    .style-discovery-container h2 {
+        font-size: 60px;
+    }
+
+    .style-discovery-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .style-discovery-background {
+        font-size: 180px;
+    }
+}
+
+@media (max-width: 600px) {
+    .style-discovery-section {
+        padding: 75px 20px;
+    }
+
+    .style-discovery-container h2 {
+        font-size: 47px;
+        letter-spacing: -1px;
+    }
+
+    .style-discovery-description {
+        margin-top: 22px;
+        font-size: 13px;
+    }
+
+    .style-discovery-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .style-discovery-option {
+        min-height: 135px;
+        padding: 22px;
+    }
+
+    .style-discovery-option h3 {
+        font-size: 21px;
+    }
+
+    .style-discovery-background {
+        font-size: 110px;
+        bottom: -25px;
+        letter-spacing: -5px;
+    }
+}
+
+@media (max-width: 400px) {
+    .style-discovery-section {
+        padding: 65px 16px;
+    }
+
+    .style-discovery-container h2 {
+        font-size: 40px;
+    }
+
+    .style-discovery-options {
+        grid-template-columns: 1fr;
+    }
+
+    .style-discovery-option {
+        min-height: 115px;
+    }
+
+    .style-discovery-background {
+        display: none;
+    }
+}
