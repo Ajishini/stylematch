@@ -2,7 +2,7 @@
 
 🔗 **Live Demo:** [Visit StyleMatch](https://stylematch-git-main-developpp.vercel.app/)
 
-StyleMatch is a fashion e-commerce website developed using React. It allows users to explore clothing and accessories for men and women, search and filter products, manage their cart and wishlist, and discover matching outfit suggestions.
+StyleMatch is a fashion e-commerce website developed using React. It allows users to explore clothing and accessories for women, search and filter products, manage their cart and wishlist, and discover matching outfit suggestions.
 
 ## 📌 Project Overview
 
