@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# 👗 StyleMatch – Fashion E-commerce Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+StyleMatch is a fashion e-commerce website developed using React. It allows users to explore clothing and accessories for men and women, discover matching outfit combinations, and manage their shopping selections through a user-friendly interface.
 
-## Available Scripts
+## 📌 Project Overview
 
-In the project directory, you can run:
+StyleMatch helps users browse fashion products and discover coordinated outfits. Users can search and filter products, add items to their cart and wishlist, and explore matching bottoms and accessories based on a selected top.
 
-### `npm start`
+## ✨ Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 👕 Browse clothing and accessories for men and women.
+- 🔍 Search for products and apply filters.
+- 🛒 Add products to the shopping cart.
+- ❤️ Add products to the wishlist.
+- 👗 View matching bottoms and accessory suggestions based on a selected top.
+- 📱 Responsive and user-friendly interface.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Technologies Used
 
-### `npm test`
+- **HTML5** — Website structure
+- **CSS3** — Styling and layout
+- **JavaScript** — Interactive functionality
+- **React** — Component-based frontend development
+- **Bootstrap** — Responsive layout and UI components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm
+- A web browser
+- Git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+   ```bash
+   git clone https://github.com/Ajishini/stylematch.git
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Navigate to the project directory:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   cd stylematch
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Install the project dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+4. Start the development server:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm run dev
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   If the project uses a different start script, check the `scripts` section in `package.json`.
 
-### Code Splitting
+5. Open the local URL displayed in your terminal.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 👩‍💻 My Role
 
-### Analyzing the Bundle Size
+Designed and developed the frontend of StyleMatch using React, JavaScript, HTML, CSS, and Bootstrap. Focused on product browsing, shopping interactions, outfit suggestions, and a responsive user interface.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🎯 Key Learning Outcomes
 
-### Making a Progressive Web App
+- Developed a frontend application using React.
+- Practiced reusable components and interactive UI development.
+- Implemented product search and filtering interfaces.
+- Worked on cart and wishlist functionality.
+- Explored outfit-matching suggestions for a fashion shopping experience.
+- Improved responsive web design skills.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 👩‍💻 Author
 
-### Advanced Configuration
+**Ajishini**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- GitHub: [Ajishini](https://github.com/Ajishini)
+- LinkedIn: [Ajishini](https://www.linkedin.com/in/ajishini-c)
 
-### Deployment
+## 🔗 Project Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[View StyleMatch on GitHub](https://github.com/Ajishini/stylematch)
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+⭐ Thanks for checking out StyleMatch!
