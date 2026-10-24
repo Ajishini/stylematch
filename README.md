@@ -1,6 +1,6 @@
 # 👗 StyleMatch – Fashion E-commerce Website
 
-StyleMatch is a fashion e-commerce website developed using React. It allows users to explore clothing and accessories for men and women, discover matching outfit combinations, and manage their shopping selections through a user-friendly interface.
+StyleMatch is a fashion e-commerce website developed using React. It allows users to explore clothing and accessories for women, discover matching outfit combinations, and manage their shopping selections through a user-friendly interface.
 
 ## 📌 Project Overview
 
