@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import "./Section1.css";
+import "./Banner.css";
 import heroVideo from "../../../assets/videos/hero.mp4";
 
-const Section1 = () => {
+const Banner = () => {
   return (
     <section className="home-hero">
       <div className="home-hero-video">
@@ -39,4 +39,4 @@ const Section1 = () => {
   );
 };
 
-export default Section1;
+export default Banner;

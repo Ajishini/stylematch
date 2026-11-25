@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check, CreditCard, Landmark, Smartphone, Banknote, ShieldCheck, LockKeyhole } from "lucide-react";
 import "./Section2.css";
+import { getCart, updatePaymentStatus } from "../../../api/apiService";
 
 const Section2 = () => {
     const navigate = useNavigate();
+    const { order_id } = useParams();
 
     const [cartItems, setCartItems] = useState([]);
     const [checkoutData, setCheckoutData] = useState(null);
@@ -20,51 +22,63 @@ const Section2 = () => {
     });
 
     useEffect(() => {
-        try {
-            const savedCart =
-                JSON.parse(localStorage.getItem("stylematch-cart")) || [];
 
-            const savedCheckout =
-                JSON.parse(
-                    localStorage.getItem("stylematch-checkout")
-                ) || null;
+        const fetchCart = async () => {
 
-            setCartItems(
-                Array.isArray(savedCart) ? savedCart : []
-            );
+            try {
+                const res = await getCart();
 
-            setCheckoutData(savedCheckout);
-        } catch (error) {
-            console.error(
-                "Unable to load payment details:",
-                error
-            );
+                if (res) {
 
-            setCartItems([]);
-            setCheckoutData(null);
-        }
+                    const items = res?.items || [];
+
+                    const Items = items.map((item) => {
+                        const product = item.product;
+
+                        return {
+                            id: product?._id,
+                            name: product?.name,
+                            image: product?.image,
+                            price: product?.actualprice,
+                            quantity: item.quantity,
+                            category: product?.category_id
+                        };
+                    });
+
+                    setCartItems(Items);
+                }
+
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
+        fetchCart();
     }, []);
+
 
     const subtotal = cartItems.reduce(
         (total, item) =>
             total +
             Number(item.price || 0) *
-                Number(item.quantity || 1),
+            Number(item.quantity || 1),
         0
     );
 
     const deliveryCharge = checkoutData
         ? Number(checkoutData.deliveryCharge || 0)
         : subtotal >= 999 || subtotal === 0
-        ? 0
-        : 99;
+            ? 0
+            : 99;
 
     const total = checkoutData
         ? Number(
-              checkoutData.total ||
-                  subtotal + deliveryCharge
-          )
+            checkoutData.total ||
+            subtotal + deliveryCharge
+        )
         : subtotal + deliveryCharge;
+
+
 
     const handlePaymentChange = (event) => {
         const { name, value } = event.target;
@@ -119,66 +133,10 @@ const Section2 = () => {
         return true;
     };
 
-    const handlePlaceOrder = (event) => {
+    const handlePlaceOrder = async (event) => {
         event.preventDefault();
 
-        if (cartItems.length === 0) {
-            alert("Your cart is empty.");
-            navigate("/shop");
-            return;
-        }
-
-        if (!checkoutData) {
-            alert("Please complete checkout details first.");
-            navigate("/checkout");
-            return;
-        }
-
-        if (!validatePayment()) {
-            return;
-        }
-
-        const orderId =
-            "SM" +
-            Date.now().toString().slice(-8);
-
-        const order = {
-            orderId,
-            orderDate: new Date().toISOString(),
-            customer: checkoutData.customer,
-            deliveryMethod:
-                checkoutData.deliveryMethod || "standard",
-            deliveryCharge,
-            paymentMethod,
-            items: cartItems,
-            subtotal,
-            total,
-            paymentStatus:
-                paymentMethod === "cod"
-                    ? "Cash on Delivery"
-                    : "Payment Successful"
-        };
-
-        localStorage.setItem(
-            "stylematch-order",
-            JSON.stringify(order)
-        );
-
-        const existingOrders =
-            JSON.parse(
-                localStorage.getItem("stylematch-orders")
-            ) || [];
-
-        localStorage.setItem(
-            "stylematch-orders",
-            JSON.stringify([
-                order,
-                ...existingOrders
-            ])
-        );
-
-        localStorage.removeItem("stylematch-cart");
-
+        await updatePaymentStatus(order_id)
         navigate("/order-confirmation");
     };
 
@@ -237,8 +195,8 @@ const Section2 = () => {
                                     const Icon = method.icon;
 
                                     return (
-                                        <button key={method.id} type="button" className={`payment-method ${ paymentMethod === method.id ? "active" : "" }`}
-                                            onClick={() => setPaymentMethod( method.id ) } >
+                                        <button key={method.id} type="button" className={`payment-method ${paymentMethod === method.id ? "active" : ""}`}
+                                            onClick={() => setPaymentMethod(method.id)} >
                                             <div className="payment-method-icon">
                                                 <Icon size={20} />
                                             </div>
@@ -256,8 +214,8 @@ const Section2 = () => {
                                             <div className="payment-method-check">
                                                 {paymentMethod ===
                                                     method.id && (
-                                                    <Check size={14} />
-                                                )}
+                                                        <Check size={14} />
+                                                    )}
                                             </div>
                                         </button>
                                     );
@@ -284,7 +242,7 @@ const Section2 = () => {
                                             UPI ID
                                         </label>
 
-                                        <input id="upiId" name="upiId" type="text" value={paymentData.upiId} onChange={  handlePaymentChange } placeholder="example@upi" />
+                                        <input id="upiId" name="upiId" type="text" value={paymentData.upiId} onChange={handlePaymentChange} placeholder="example@upi" />
 
                                         <span className="field-hint">
                                             Enter your registered UPI ID
@@ -300,7 +258,7 @@ const Section2 = () => {
                                             CARD NUMBER
                                         </label>
 
-                                        <input id="cardNumber" name="cardNumber" type="text" value={ paymentData.cardNumber } onChange={ handlePaymentChange } placeholder="1234 5678 9012 3456" maxLength={19} />
+                                        <input id="cardNumber" name="cardNumber" type="text" value={paymentData.cardNumber} onChange={handlePaymentChange} placeholder="1234 5678 9012 3456" maxLength={19} />
                                     </div>
 
                                     <div className="payment-field full">
@@ -308,7 +266,7 @@ const Section2 = () => {
                                             NAME ON CARD
                                         </label>
 
-                                        <input id="cardName" name="cardName" type="text" value={ paymentData.cardName } onChange={ handlePaymentChange } placeholder="Enter name as on card" />
+                                        <input id="cardName" name="cardName" type="text" value={paymentData.cardName} onChange={handlePaymentChange} placeholder="Enter name as on card" />
                                     </div>
 
                                     <div className="payment-field">
@@ -316,7 +274,7 @@ const Section2 = () => {
                                             EXPIRY DATE
                                         </label>
 
-                                        <input id="expiry" name="expiry" type="text" value={paymentData.expiry} onChange={ handlePaymentChange } placeholder="MM / YY" maxLength={5} />
+                                        <input id="expiry" name="expiry" type="text" value={paymentData.expiry} onChange={handlePaymentChange} placeholder="MM / YY" maxLength={5} />
                                     </div>
 
                                     <div className="payment-field">
@@ -324,7 +282,7 @@ const Section2 = () => {
                                             CVV
                                         </label>
 
-                                        <input id="cvv" name="cvv" type="password" value={paymentData.cvv}  onChange={ handlePaymentChange } placeholder="•••" maxLength={4} />
+                                        <input id="cvv" name="cvv" type="password" value={paymentData.cvv} onChange={handlePaymentChange} placeholder="•••" maxLength={4} />
                                     </div>
                                 </div>
                             )}
@@ -336,7 +294,7 @@ const Section2 = () => {
                                             SELECT YOUR BANK
                                         </label>
 
-                                        <select id="bank" name="bank" value={paymentData.bank} onChange={ handlePaymentChange } >
+                                        <select id="bank" name="bank" value={paymentData.bank} onChange={handlePaymentChange} >
                                             <option value="">
                                                 Select Bank
                                             </option>
@@ -418,7 +376,7 @@ const Section2 = () => {
                                 </span>
                             </Link>
 
-                            <button type="submit"  className="place-order-button" >
+                            <button type="submit" className="place-order-button" >
                                 <span>PLACE ORDER</span>
                                 <ArrowRight size={17} />
                             </button>
@@ -443,6 +401,7 @@ const Section2 = () => {
                         </div>
 
                         <div className="payment-summary-products">
+                            {console.log(cartItems)}
                             {cartItems.length === 0 ? (
                                 <div className="payment-empty">
                                     <p>
@@ -520,7 +479,7 @@ const Section2 = () => {
                             <span>Total</span>
 
                             <strong>
-                                ₹ {total.toLocaleString( "en-IN" )}
+                                ₹ {total.toLocaleString("en-IN")}
                             </strong>
                         </div>
 

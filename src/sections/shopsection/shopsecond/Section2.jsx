@@ -3,6 +3,7 @@ import { Search, X, SlidersHorizontal, ChevronDown } from "lucide-react";
 import "./Section2.css";
 
 const Section2 = ({
+  categories = [],
   searchTerm,
   setSearchTerm,
   selectedCategory,
@@ -12,15 +13,7 @@ const Section2 = ({
   const [selectedPrice, setSelectedPrice] = useState("All");
   const [selectedDiscount, setSelectedDiscount] = useState("All");
 
-  const categories = [
-    "All",
-    "Tops",
-    "Bottoms",
-    "Dresses",
-    "Footwear",
-    "Bags",
-    "Accessories",
-  ];
+  const categoryList = [{ _id: "All", name: "All" }, ...categories];
 
   const priceOptions = [
     "All",
@@ -58,10 +51,10 @@ const Section2 = ({
             )}
           </div>
 
-          <button type="button" className={`shop-filter-button ${ showFilter ? "active" : "" }`} onClick={() => setShowFilter(!showFilter)} >
+          <button type="button" className={`shop-filter-button ${showFilter ? "active" : ""}`} onClick={() => setShowFilter(!showFilter)} >
             <SlidersHorizontal size={17} />
             <span>FILTER</span>
-            <ChevronDown size={15} className={ showFilter ? "filter-arrow rotate" : "filter-arrow" } />
+            <ChevronDown size={15} className={showFilter ? "filter-arrow rotate" : "filter-arrow"} />
           </button>
         </div>
 
@@ -71,9 +64,13 @@ const Section2 = ({
           </div>
 
           <div className="shop-category-list">
-            {categories.map((category) => (
-              <button key={category} type="button" className={ selectedCategory === category ? "active" : "" } onClick={() => setSelectedCategory(category)} >
-                {category}
+            {categoryList.map((category) => (
+              <button
+                key={category._id}
+                type="button"
+                className={selectedCategory === category._id ? "active" : ""}
+                onClick={() => setSelectedCategory(category._id)} >
+                {category.name}
               </button>
             ))}
           </div>
@@ -97,10 +94,14 @@ const Section2 = ({
                 <h4>CATEGORY</h4>
 
                 <div className="filter-options">
-                  {categories.map((category) => (
-                    <label key={category} className="filter-option" >
-                      <input type="radio" name="filter-category" checked={ selectedCategory === category  } onChange={() => setSelectedCategory(category) } />
-                      <span>{category}</span>
+                  {categoryList.map((category) => (
+                    <label key={category._id} className="filter-option" >
+                      <input
+                        type="radio"
+                        name="filter-category"
+                        checked={selectedCategory === category._id}
+                        onChange={() => setSelectedCategory(category._id)} />
+                      <span>{category.name}</span>
                     </label>
                   ))}
                 </div>
@@ -113,7 +114,7 @@ const Section2 = ({
                   {priceOptions.map((price) => (
                     <label key={price} className="filter-option" >
                       <input type="radio" name="filter-price" checked={selectedPrice === price}
-                        onChange={() => setSelectedPrice(price) } />
+                        onChange={() => setSelectedPrice(price)} />
                       <span>{price}</span>
                     </label>
                   ))}
@@ -126,8 +127,8 @@ const Section2 = ({
                 <div className="filter-options">
                   {discountOptions.map((discount) => (
                     <label key={discount} className="filter-option" >
-                      <input type="radio" name="filter-discount" checked={ selectedDiscount === discount }
-                        onChange={() => setSelectedDiscount(discount) } />
+                      <input type="radio" name="filter-discount" checked={selectedDiscount === discount}
+                        onChange={() => setSelectedDiscount(discount)} />
                       <span>{discount}</span>
                     </label>
                   ))}

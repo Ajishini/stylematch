@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserRound, MapPin, Phone, Mail, Truck, Package, ShieldCheck, ArrowRight, ArrowLeft } from "lucide-react";
+import { UserRound, MapPin, Phone, Mail, ShieldCheck, ArrowRight, ArrowLeft } from "lucide-react";
 import "./Section2.css";
 
+import { getCart, createOrder, updatePaymentStatus } from "../../../api/apiService";
+
 const Section2 = () => {
+
     const navigate = useNavigate();
+
     const [cartItems, setCartItems] = useState([]);
+
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -15,17 +20,28 @@ const Section2 = () => {
         state: "",
         pincode: ""
     });
+
     const [deliveryMethod, setDeliveryMethod] = useState("standard");
 
     useEffect(() => {
-        try {
-            const savedCart = JSON.parse(localStorage.getItem("stylematch-cart")) || [];
-            setCartItems(Array.isArray(savedCart) ? savedCart : []);
-        } catch (error) {
-            console.error("Unable to load checkout cart:", error);
-            setCartItems([]);
-        }
+        const fetchCart = async () => {
+            try {
+                const res = await getCart();
+
+                if (res && res.items) {
+                    setCartItems(res.items);
+                } else {
+                    setCartItems([]);
+                }
+            } catch (err) {
+                setCartItems([]);
+            }
+        };
+
+        fetchCart();
     }, []);
+
+    
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -37,7 +53,9 @@ const Section2 = () => {
 
     const subtotal = cartItems.reduce(
         (total, item) =>
-            total + Number(item.price || 0) * Number(item.quantity || 1),
+            total +
+            Number(item.product?.actualprice || 0) *
+            Number(item.quantity || 1),
         0
     );
 
@@ -45,12 +63,12 @@ const Section2 = () => {
         deliveryMethod === "express"
             ? 199
             : subtotal >= 999 || subtotal === 0
-            ? 0
-            : 99;
+                ? 0
+                : 99;
 
     const total = subtotal + deliveryCharge;
 
-    const handleContinue = (event) => {
+    const handleContinue = async (event) => {
         event.preventDefault();
 
         const requiredFields = [
@@ -72,18 +90,40 @@ const Section2 = () => {
             return;
         }
 
-        localStorage.setItem(
-            "stylematch-checkout",
-            JSON.stringify({
-                customer: formData,
-                deliveryMethod,
-                deliveryCharge,
-                subtotal,
-                total
-            })
-        );
+        if (cartItems.length === 0) {
+            alert("Your cart is empty");
+            return;
+        } 
 
-        navigate("/payment");
+        try {
+            const contactDetails = {
+                fullName: formData.fullName,
+                email: formData.email,
+                phone: formData.phone
+            };
+
+            const shippingAddress ={
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                pincode: formData.pincode
+            }
+
+            const res = await createOrder(contactDetails, shippingAddress);
+            console.log("**************")
+            console.log(res);
+
+                if (res && res.success) {
+
+                navigate(`/payment/${res.data._id}`, {
+                    state: {
+                        order: res.data
+                    }
+                });
+        }
+    }   catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -229,7 +269,7 @@ const Section2 = () => {
                             </div>
                         </div>
 
-                        <div className="checkout-card">
+                        {/* <div className="checkout-card">
                             <div className="checkout-card-heading">
                                 <div className="checkout-step-number">03</div>
 
@@ -290,7 +330,7 @@ const Section2 = () => {
                                     <div className="delivery-price">₹199</div>
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <aside className="checkout-summary">
@@ -303,23 +343,32 @@ const Section2 = () => {
                         </div>
 
                         <div className="checkout-summary-products">
-                            {cartItems.map((item) => (
-                                <div className="checkout-summary-product" key={String(item.id)}>
-                                    <div className="checkout-summary-image">
-                                        <img src={item.image} alt={item.name} />
-                                        <span>{item.quantity || 1}</span>
-                                    </div>
+                            {cartItems.length > 0 ? (
+                                cartItems.map((item) => (
+                                    <div className="checkout-summary-product" key={item._id} >
+                                        <div className="checkout-summary-image">
+                                            <img src={item.product?.image} alt={item.product?.name} />
+                                            <span>{item.quantity}</span>
+                                        </div>
 
-                                    <div className="checkout-summary-product-info">
-                                        <span>{item.category}</span>
-                                        <h3>{item.name}</h3>
+                                        <div className="checkout-summary-product-info">
+                                            <span>
+                                                {item.product?.category}
+                                            </span>
 
-                                        <strong>
-                                            ₹{Number(item.price || 0).toLocaleString("en-IN")}
-                                        </strong>
+                                            <h3>
+                                                {item.product?.name}
+                                            </h3>
+
+                                            <strong>
+                                                ₹{Number(item.product?.actualprice || 0 ).toLocaleString("en-IN")}
+                                            </strong>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                            ) : (
+                                <p>Your cart is empty.</p>
+                            )}
                         </div>
 
                         <div className="checkout-price-details">
@@ -371,3 +420,52 @@ const Section2 = () => {
 };
 
 export default Section2;
+
+// const handlePlaceOrder = async (event) => {
+//     event.preventDefault();
+
+//     if (cartItems.length === 0) {
+//         alert("Your cart is empty.");
+//         navigate("/shop");
+//         return;
+//     }
+
+//     if (!orderId) {
+//         alert("Order ID not found. Please complete checkout again.");
+//         navigate("/checkout");
+//         return;
+//     }
+
+//     if (!validatePayment()) {
+//         return;
+//     }
+
+//     try {
+//         // COD is not a completed payment.
+//         if (paymentMethod !== "cod") {
+//             const res = await updatePaymentStatus(orderId);
+
+//             if (!res || !res.success) {
+//                 alert(res?.message || "Payment update failed.");
+//                 return;
+//             }
+//         }
+
+//         alert(
+//             paymentMethod === "cod"
+//                 ? "Order placed successfully. Pay when delivered."
+//                 : "Payment successful!"
+//         );
+
+//         navigate("/order-confirmation", {
+//             state: {
+//                 order: location.state?.order,
+//                 paymentMethod
+//             }
+//         });
+
+//     } catch (err) {
+//         console.log("Payment Error:", err);
+//         alert("Something went wrong.");
+//     }
+// };

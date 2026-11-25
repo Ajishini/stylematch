@@ -3,120 +3,84 @@ import { useNavigate, Link } from "react-router-dom";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag, ArrowRight } from "lucide-react";
 import "./Section2.css";
 
-const Section2 = () => {
-    const [cartItems, setCartItems] = useState([]);
+import { getCart, updateCart, removeFromCart } from "../../../api/apiService";
 
+const Section2 = () => {
+
+    const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
 
-    const mergeDuplicateItems = (items) => {
-        const mergedItems = new Map();
+    const handleGetCart = async () => {
+        try {
+            const res = await getCart();
+            console.log(res)
 
-        items.forEach((item) => {
-            const key = String(item.id);
-
-            if (mergedItems.has(key)) {
-                const existingItem = mergedItems.get(key);
-
-                mergedItems.set(key, {
-                    ...existingItem,
-                    quantity:
-                        Number(existingItem.quantity || 1) +
-                        Number(item.quantity || 1)
-                });
-            } else {
-                mergedItems.set(key, {
-                    ...item,
-                    quantity: Number(item.quantity || 1)
-                });
+            if (res && res.items) {
+                setCartItems(res.items);
             }
-        });
+            else {
+                setCartItems([]);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
 
-        return Array.from(mergedItems.values());
+    const handleRemoveCart = async (productId) => {
+        try {
+            const res = await removeFromCart(productId);
+
+            if (res && res.success) {
+                await handleGetCart();
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     };
 
     useEffect(() => {
-        try {
-            const savedCart =
-                JSON.parse(
-                    localStorage.getItem("stylematch-cart")
-                ) || [];
-
-            const cleanedCart = mergeDuplicateItems(
-                Array.isArray(savedCart) ? savedCart : []
-            );
-
-            setCartItems(cleanedCart);
-
-            localStorage.setItem(
-                "stylematch-cart",
-                JSON.stringify(cleanedCart)
-            );
-        } catch (error) {
-            console.error("Unable to load cart:", error);
-            setCartItems([]);
-        }
+        handleGetCart();
     }, []);
 
-    const updateCart = (items) => {
-        const cleanedItems = mergeDuplicateItems(items);
-
-        setCartItems(cleanedItems);
-
-        localStorage.setItem(
-            "stylematch-cart",
-            JSON.stringify(cleanedItems)
-        );
+    const increaseQuantity = async (productId, quantity) => {
+        try {
+            const res = await updateCart(productId, quantity + 1);
+            console.log(res);
+            if (res) {
+                await handleGetCart();
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     };
 
-    const increaseQuantity = (id) => {
-        const updatedCart = cartItems.map((item) => {
-            if (String(item.id) === String(id)) {
-                return {
-                    ...item,
-                    quantity: Number(item.quantity || 0) + 1
-                };
+    const decreaseQuantity = async (productId, quantity) => {
+        try {
+            if (quantity <= 1) {
+                await handleRemoveCart(productId);
+                return;
             }
 
-            return item;
-        });
+            const res = await updateCart(productId, quantity - 1);
 
-        updateCart(updatedCart);
+            if (res ) {
+                await handleGetCart();
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     };
 
-    const decreaseQuantity = (id) => {
-        const updatedCart = cartItems
-            .map((item) => {
-                if (String(item.id) === String(id)) {
-                    return {
-                        ...item,
-                        quantity:
-                            Number(item.quantity || 1) - 1
-                    };
-                }
-
-                return item;
-            })
-            .filter(
-                (item) => Number(item.quantity) > 0
-            );
-
-        updateCart(updatedCart);
-    };
-
-    const removeItem = (id) => {
-        const updatedCart = cartItems.filter(
-            (item) =>
-                String(item.id) !== String(id)
-        );
-
-        updateCart(updatedCart);
-    };
 
     const subtotal = cartItems.reduce(
         (total, item) =>
             total +
-            Number(item.price || 0) *
-                Number(item.quantity || 1),
+            Number(item.product?.actualprice || 0) *
+            Number(item.quantity || 1),
         0
     );
 
@@ -185,43 +149,42 @@ const Section2 = () => {
 
                         <div className="cart-items">
                             {cartItems.map((item) => (
-                                <article className="cart-item" key={String(item.id)} >
+                                <article className="cart-item" key={String(item._id)} >
+                                    {console.log(cartItems)}
                                     <div className="cart-item-image">
-                                        <Link to={`/product/${item.id}`} >
-                                            <img src={item.image} alt={item.name} />
+                                        <Link to={`/product/${item.product._id}`} >
+                                            <img src={item.product.image} alt={item.product.name} />
                                         </Link>
 
                                         {item.discount && (
                                             <span>
-                                                {item.discount}
+                                                {item.product.discount}
                                             </span>
                                         )}
                                     </div>
 
                                     <div className="cart-item-details">
                                         <span className="cart-item-category">
-                                            {item.category}
+                                            {item.product.category}
                                         </span>
 
-                                        <Link to={`/product/${item.id}`} className="cart-item-name" >
-                                            {item.name}
+                                        <Link to={`/product/${item.product._id}`} className="cart-item-name" >
+                                            {item.product.name}
                                         </Link>
 
                                         <div className="cart-item-price">
                                             <strong>
-                                                ₹ {Number( item.price || 0 ).toLocaleString( "en-IN" )}
+                                                ₹{Number(item.product.actualprice || 0).toLocaleString("en-IN")}
                                             </strong>
 
-                                            {item.oldPrice && (
-                                                <del>
-                                                    ₹ {Number( item.oldPrice ).toLocaleString( "en-IN" )}
-                                                </del>
-                                            )}
+                                            <del>
+                                                ₹{Number(item.product.originalprice || 0).toLocaleString("en-IN")}
+                                            </del>
                                         </div>
 
                                         <div className="cart-item-bottom">
                                             <div className="cart-quantity">
-                                                <button type="button" onClick={() => decreaseQuantity( item.id ) } aria-label="Decrease quantity" >
+                                                <button type="button" onClick={() => decreaseQuantity(item.product._id, item.quantity)} aria-label="Decrease quantity" >
                                                     <Minus size={14} />
                                                 </button>
 
@@ -229,12 +192,12 @@ const Section2 = () => {
                                                     {item.quantity}
                                                 </span>
 
-                                                <button type="button" onClick={() => increaseQuantity( item.id ) } aria-label="Increase quantity" >
+                                                <button type="button" onClick={() => increaseQuantity(item.product._id, item.quantity)} aria-label="Increase quantity" >
                                                     <Plus size={14} />
                                                 </button>
                                             </div>
 
-                                            <button type="button" className="remove-item" onClick={() => removeItem( item.id ) } >
+                                            <button type="button" className="remove-item" onClick={() => handleRemoveCart(item.product._id)} >
                                                 <Trash2 size={15} />
                                                 REMOVE
                                             </button>
@@ -262,7 +225,7 @@ const Section2 = () => {
                             <div>
                                 <span>Subtotal</span>
                                 <strong>
-                                    ₹ {subtotal.toLocaleString( "en-IN" )}
+                                    ₹ {subtotal.toLocaleString("en-IN")}
                                 </strong>
                             </div>
 
@@ -279,11 +242,11 @@ const Section2 = () => {
                         <div className="summary-total">
                             <span>TOTAL</span>
                             <strong>
-                                ₹ {total.toLocaleString( "en-IN" )}
+                                ₹ {total.toLocaleString("en-IN")}
                             </strong>
                         </div>
 
-                        <button type="button" className="proceed-checkout-button" onClick={ handleProceedToCheckout } >
+                        <button type="button" className="proceed-checkout-button" onClick={handleProceedToCheckout} >
                             <span>
                                 PROCEED TO CHECKOUT
                             </span>

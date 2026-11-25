@@ -1,3 +1,4 @@
+
 import React from "react";
 import { LockKeyhole, ChevronRight } from "lucide-react";
 import "./Section1.css";
@@ -40,3 +41,4 @@ const Section1 = () => {
 };
 
 export default Section1;
+

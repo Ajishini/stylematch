@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, ArrowRight, User, Mail, LockKeyhole } from "lucide-react";
+
 import "./ProfileLogin.css";
 
 const ProfileLogin = ({ onLogin }) => {
@@ -7,7 +8,7 @@ const ProfileLogin = ({ onLogin }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
-        fullName: "",
+        username: "",
         email: "",
         password: ""
     });
@@ -24,7 +25,7 @@ const ProfileLogin = ({ onLogin }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (mode === "signup" && !formData.fullName.trim()) {
+        if (mode === "signup" && !formData.username.trim()) {
             alert("Please enter your full name.");
             return;
         }
@@ -46,19 +47,19 @@ const ProfileLogin = ({ onLogin }) => {
             mode === "signup"
                 ? {
                       ...existingUser,
-                      fullName: formData.fullName,
+                      username: formData.username,
                       email: formData.email
                   }
                 : {
                       ...existingUser,
-                      fullName: existingUser.fullName || "StyleMatch User",
+                      username: existingUser.username || "StyleMatch User",
                       email: formData.email
                   };
 
         localStorage.setItem("stylematch-user", JSON.stringify(userData));
 
         if (onLogin) {
-            onLogin();
+            onLogin(formData, mode);
         }
     };
 
@@ -66,7 +67,7 @@ const ProfileLogin = ({ onLogin }) => {
         setMode((previous) => previous === "login" ? "signup" : "login");
 
         setFormData({
-            fullName: "",
+            username: "",
             email: "",
             password: ""
         });
@@ -117,9 +118,9 @@ const ProfileLogin = ({ onLogin }) => {
 
                                     <input
                                         type="text"
-                                        name="fullName"
+                                        name="username"
                                         placeholder="Enter your full name"
-                                        value={formData.fullName}
+                                        value={formData.username}
                                         onChange={handleChange}
                                     />
                                 </div>

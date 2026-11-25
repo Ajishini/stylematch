@@ -3,61 +3,87 @@ import { Link, useNavigate } from "react-router-dom";
 import { Heart, Trash2, ShoppingBag, ArrowRight, } from "lucide-react";
 import "./Section2.css";
 
+import { getWishlist, removeFromWishlist } from "../../../api/apiService";
+
 const Section2 = () => {
+
   const [wishlistItems, setWishlistItems] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const savedWishlist =
-      JSON.parse(localStorage.getItem("stylematch-wishlist")) || [];
+  const handleGetWishlist = async () => {
+    try {
+      const res = await getWishlist();
 
-    setWishlistItems(savedWishlist);
+      if (res && res.items) {
+        const products = res.items
+          .filter(item => item.product)
+          .map(item => item.product);
+
+        setWishlistItems(products);
+      }
+      else {
+        setWishlistItems([]);
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    handleGetWishlist();
   }, []);
 
-  const updateWishlist = (items) => {
-    setWishlistItems(items);
+  const handleRemoveWishlist = async (productId) => {
+    try {
+      const res = await removeFromWishlist(productId);
 
-    localStorage.setItem(
-      "stylematch-wishlist",
-      JSON.stringify(items)
-    );
+      if (res && res.success) {
+        setWishlistItems(prev =>
+          prev.filter(item => item._id !== productId)
+        );
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
 
-  const removeFromWishlist = (id) => {
-    const updatedWishlist = wishlistItems.filter(
-      (item) => item.id !== id
-    );
+  const moveToCart = async (product) => {
+    const cartProduct = {
+      ...product,
+      id: product._id,
+      price: product.actualprice,
+      oldPrice: product.originalprice,
+      category: product.category_id?.name || "Fashion"
+    };
 
-    updateWishlist(updatedWishlist);
-  };
-
-  const moveToCart = (product) => {
     const existingCart =
       JSON.parse(localStorage.getItem("stylematch-cart")) || [];
 
     const existingProduct = existingCart.find(
-      (item) => item.id === product.id
+      (item) => item.id === cartProduct.id
     );
 
     let updatedCart;
 
     if (existingProduct) {
       updatedCart = existingCart.map((item) =>
-        item.id === product.id
+        item.id === cartProduct.id
           ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
+            ...item,
+            quantity: item.quantity + 1
+          }
           : item
       );
     } else {
       updatedCart = [
         ...existingCart,
         {
-          ...product,
+          ...cartProduct,
           quantity: 1,
-          selectedSize: "M",
-        },
+          selectedSize: "M"
+        }
       ];
     }
 
@@ -66,11 +92,8 @@ const Section2 = () => {
       JSON.stringify(updatedCart)
     );
 
-    const updatedWishlist = wishlistItems.filter(
-      (item) => item.id !== product.id
-    );
+    await handleRemoveWishlist(product._id);
 
-    updateWishlist(updatedWishlist);
     navigate("/cart");
   };
 
@@ -123,9 +146,9 @@ const Section2 = () => {
 
         <div className="wishlist-grid">
           {wishlistItems.map((product) => (
-            <article className="wishlist-card" key={product.id} >
+            <article className="wishlist-card" key={product._id} >
               <div className="wishlist-image">
-                <Link to={`/product/${product.id}`}>
+                <Link to={`/product/${product._id}`}>
                   <img src={product.image} alt={product.name} />
                 </Link>
 
@@ -134,44 +157,41 @@ const Section2 = () => {
                 </span>
 
                 <button type="button" className="wishlist-remove"
-                  onClick={() => removeFromWishlist(product.id) } aria-label={`Remove ${product.name} from wishlist`} >
+                  onClick={() => handleRemoveWishlist(product._id)} aria-label={`Remove ${product.name} from wishlist`} >
                   <Heart size={18} fill="currentColor" />
                 </button>
               </div>
 
               <div className="wishlist-info">
                 <span className="wishlist-category">
-                  {product.category}
+                  {product.category_id?.name || "Fashion"}
                 </span>
 
-                <Link to={`/product/${product.id}`} className="wishlist-name" >
+                <Link to={`/product/${product._id}`} className="wishlist-name" >
                   {product.name}
                 </Link>
 
                 <div className="wishlist-price">
                   <strong>
-                    ₹{product.price.toLocaleString("en-IN")}
+                    ₹{Number(product.actualprice || 0).toLocaleString("en-IN")}
                   </strong>
 
                   {product.oldPrice && (
                     <del>
-                      ₹
-                      {product.oldPrice.toLocaleString(
-                        "en-IN"
-                      )}
+                      ₹{Number(product.originalprice || 0).toLocaleString("en-IN")}
                     </del>
                   )}
                 </div>
 
                 <div className="wishlist-actions">
                   <button type="button" className="wishlist-cart-button"
-                    onClick={() => moveToCart(product) } >
+                    onClick={() => moveToCart(product)} >
                     <ShoppingBag size={15} />
                     ADD TO CART
                   </button>
 
                   <button type="button" className="wishlist-delete-button"
-                    onClick={() => removeFromWishlist(product.id) } aria-label={`Delete ${product.name}`} >
+                    onClick={() => handleRemoveWishlist(product._id)} aria-label={`Delete ${product.name}`} >
                     <Trash2 size={16} />
                   </button>
                 </div>
